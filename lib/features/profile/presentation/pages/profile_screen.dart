@@ -4,7 +4,7 @@ import 'package:ftes/core/utils/text_styles.dart';
 import 'package:ftes/core/constants/app_constants.dart';
 import 'package:ftes/core/widgets/bottom_navigation_bar.dart';
 import 'package:ftes/features/profile/presentation/pages/edit_profile_screen.dart';
-import 'package:ftes/features/profile/presentation/pages/notifications_screen.dart';
+
 import 'package:ftes/features/points/presentation/pages/invite_friends_screen.dart';
 import 'package:ftes/features/auth/presentation/viewmodels/auth_viewmodel.dart';
 import 'package:ftes/features/auth/domain/entities/user.dart';
@@ -154,7 +154,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       _MenuItem(
                         icon: Icons.notifications_none_rounded,
                         title: 'Thông báo',
-                        onTap: () => _navigateTo(const NotificationsScreen()),
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Tính năng đang phát triển'),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),

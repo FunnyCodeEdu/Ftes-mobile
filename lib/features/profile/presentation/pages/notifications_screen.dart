@@ -29,17 +29,15 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           children: [
             // Status Bar Space
             const SizedBox(height: 25),
-            
+
             // Navigation Bar
             _buildNavigationBar(),
-            
+
             const SizedBox(height: 20),
-            
+
             // Notification Settings
-            Expanded(
-              child: _buildNotificationSettings(),
-            ),
-            
+            Expanded(child: _buildNotificationSettings()),
+
             const SizedBox(height: 20),
           ],
         ),
@@ -104,9 +102,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               });
             },
           ),
-          
+
           const SizedBox(height: 40),
-          
+
           _buildNotificationItem(
             title: 'Âm thanh',
             value: _sound,
@@ -116,9 +114,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               });
             },
           ),
-          
+
           const SizedBox(height: 40),
-          
+
           _buildNotificationItem(
             title: 'Rung',
             value: _vibrate,
@@ -128,9 +126,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               });
             },
           ),
-          
+
           const SizedBox(height: 40),
-          
+
           _buildNotificationItem(
             title: 'Thông báo chung',
             value: _generalNotification,
@@ -140,9 +138,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               });
             },
           ),
-          
+
           const SizedBox(height: 40),
-          
+
           _buildNotificationItem(
             title: 'Khuyến mãi & Giảm giá',
             value: _promoDiscount,
@@ -152,9 +150,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               });
             },
           ),
-          
+
           const SizedBox(height: 40),
-          
+
           _buildNotificationItem(
             title: 'Tùy chọn thanh toán',
             value: _paymentOptions,
@@ -164,9 +162,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               });
             },
           ),
-          
+
           const SizedBox(height: 40),
-          
+
           _buildNotificationItem(
             title: 'Cập nhật ứng dụng',
             value: _appUpdate,
@@ -176,9 +174,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               });
             },
           ),
-          
+
           const SizedBox(height: 40),
-          
+
           _buildNotificationItem(
             title: 'Dịch vụ mới có sẵn',
             value: _newServiceAvailable,
@@ -188,9 +186,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               });
             },
           ),
-          
+
           const SizedBox(height: 40),
-          
+
           _buildNotificationItem(
             title: 'Mẹo mới có sẵn',
             value: _newTipsAvailable,
@@ -231,7 +229,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
     required ValueChanged<bool> onChanged,
   }) {
     return GestureDetector(
-      onTap: () => onChanged(!value),
+      onTap: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Tính năng đang phát triển')),
+        );
+      },
       child: Container(
         width: 50,
         height: 30,

@@ -18,12 +18,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(AppConstants.keyFirstLaunch, false);
     if (!mounted) return;
-    Navigator.pushNamedAndRemoveUntil(context, AppConstants.routeSignIn, (r) => false);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppConstants.routeSignIn,
+      (r) => false,
+    );
   }
 
   void _next() {
     if (_index < 2) {
-      _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
     } else {
       _complete();
     }
@@ -43,65 +50,65 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         actions: [
-          TextButton(
-            onPressed: _complete,
-            child: const Text('Bỏ qua'),
-          ),
+          TextButton(onPressed: _complete, child: const Text('Bỏ qua')),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: PageView(
-              controller: _pageController,
-              onPageChanged: (i) => setState(() => _index = i),
-              children: const [
-                _Slide(
-                  title: 'Học tập dễ dàng',
-                  subtitle: 'Khoá học chất lượng, lộ trình rõ ràng và nội dung cập nhật.',
-                  icon: Icons.menu_book_rounded,
-                ),
-                _Slide(
-                  title: 'Theo dõi tiến độ',
-                  subtitle: 'Ghi nhớ bài học và luyện tập mọi lúc mọi nơi.',
-                  icon: Icons.timeline_rounded,
-                ),
-                _Slide(
-                  title: 'AI trợ lý học tập',
-                  subtitle: 'Đặt câu hỏi, AI giúp bạn hiểu sâu hơn.',
-                  icon: Icons.smart_toy_rounded,
-                ),
-              ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(3, (i) {
-              final active = i == _index;
-              return AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                margin: const EdgeInsets.symmetric(horizontal: 6),
-                height: 8,
-                width: active ? 24 : 8,
-                decoration: BoxDecoration(
-                  color: active ? AppColors.primary : Colors.black12,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              );
-            }),
-          ),
-          const SizedBox(height: 16),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _next,
-                child: Text(_index < 2 ? 'Tiếp tục' : 'Bắt đầu'),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (i) => setState(() => _index = i),
+                children: const [
+                  _Slide(
+                    title: 'Học tập dễ dàng',
+                    subtitle:
+                        'Khoá học chất lượng, lộ trình rõ ràng và nội dung cập nhật.',
+                    icon: Icons.menu_book_rounded,
+                  ),
+                  _Slide(
+                    title: 'Theo dõi tiến độ',
+                    subtitle: 'Ghi nhớ bài học và luyện tập mọi lúc mọi nơi.',
+                    icon: Icons.timeline_rounded,
+                  ),
+                  _Slide(
+                    title: 'AI trợ lý học tập',
+                    subtitle: 'Đặt câu hỏi, AI giúp bạn hiểu sâu hơn.',
+                    icon: Icons.smart_toy_rounded,
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(3, (i) {
+                final active = i == _index;
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  margin: const EdgeInsets.symmetric(horizontal: 6),
+                  height: 8,
+                  width: active ? 24 : 8,
+                  decoration: BoxDecoration(
+                    color: active ? AppColors.primary : Colors.black12,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                );
+              }),
+            ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: _next,
+                  child: Text(_index < 2 ? 'Tiếp tục' : 'Bắt đầu'),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -138,18 +145,20 @@ class _Slide extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
+            style: Theme.of(
+              context,
+            ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 12),
           Text(
             subtitle,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.black54),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyLarge?.copyWith(color: Colors.black54),
           ),
         ],
       ),
     );
   }
 }
-
-
