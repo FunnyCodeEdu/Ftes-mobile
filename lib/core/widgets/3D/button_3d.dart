@@ -384,7 +384,7 @@ class _OutlineButton3DState extends State<OutlineButton3D>
                           padding: paddingValue,
                           decoration: _getButtonDecoration(shadowColor),
                           child: Row(
-                            mainAxisSize: MainAxisSize.min,
+                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               if (widget.icon != null &&

@@ -406,12 +406,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 4),
       child: OutlineButton3D(
         text: 'Đăng xuất',
+        icon: Icons.logout,
         variant: Button3DVariant.outline,
         borderColor: const Color(0xFFEF4444), // Tailwind Red 500
         borderWidth: 1.5,
         borderRadius: 16,
         height: 54,
         width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         onPressed: _showLogoutDialog,
       ),
     );
