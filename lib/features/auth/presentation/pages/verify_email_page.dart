@@ -581,31 +581,56 @@ class _VerifyEmailPageState extends State<VerifyEmailPage>
       return;
     }
 
-    final success = await viewModel.verifyOTP(widget.email, otp);
+    // Step 1: Verify OTP to get access token
+    final accessToken = await viewModel.verifyOTP(widget.email, otp);
 
-    if (success && mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Row(
-            children: [
-              Icon(Icons.check_circle, color: Colors.white),
-              SizedBox(width: 12),
-              Text('Xác thực email thành công!'),
-            ],
+    if (accessToken != null && mounted) {
+      // Step 2: Activate user account
+      final activated = await viewModel.activateUser(accessToken);
+
+      if (activated && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.white),
+                SizedBox(width: 12),
+                Text('Xác thực và kích hoạt tài khoản thành công!'),
+              ],
+            ),
+            backgroundColor: AppColors.success,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
-          backgroundColor: AppColors.success,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+        );
+        // Navigate back to login page
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          AppConstants.routeSignIn,
+          (route) => false,
+        );
+      } else if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Icon(Icons.error_outline, color: Colors.white),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(viewModel.errorMessage ?? 'Kích hoạt tài khoản thất bại'),
+                ),
+              ],
+            ),
+            backgroundColor: AppColors.error,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
-        ),
-      );
-      // Navigate back to login page
-      Navigator.pushNamedAndRemoveUntil(
-        context,
-        AppConstants.routeSignIn,
-        (route) => false,
-      );
+        );
+      }
     } else if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

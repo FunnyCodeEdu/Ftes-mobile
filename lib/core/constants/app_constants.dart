@@ -102,18 +102,18 @@ class AppConstants {
   static const String googleAuthEndpoint = '/api/auth/outbound/authentication';
   static const String verifyEmailCodeEndpoint = '/api/auth/verify-email-code';
   static const String resendVerifyCodeEndpoint =
-      '/users/mail/resend-verify-code';
-  static const String refreshTokenEndpoint = '/auth/refresh';
-  static const String logoutEndpoint = '/auth/logout';
-  static const String forgotPasswordEndpoint = '/auth/forgot-password';
-  static const String activeUserEndpoint = '/auth/activate';
+      '/api/users/mail/resend-verify-code';
+  static const String refreshTokenEndpoint = '/api/auth/refresh';
+  static const String logoutEndpoint = '/api/auth/logout';
+  static const String forgotPasswordEndpoint = '/api/auth/forgot-password';
+  static const String activeUserEndpoint = '/api/users/active-user';
   static const String introspectEndpoint = '/api/auth/introspect';
   static const String myInfoEndpoint = '/api/users/me';
-  static const String verifyOtpEndpoint = '/auth/verify-otp';
-  static const String sendSecretKeyEndpoint = '/auth/2fa/send-secret';
-  static const String verifyUpdateEmailEndpoint = '/auth/verify-update-email';
-  static const String changePasswordEndpoint = '/user/change-password';
-  static const String updateGmailEndpoint = '/user/update-gmail';
+  static const String verifyOtpEndpoint = '/api/auth/verify-otp';
+  static const String sendSecretKeyEndpoint = '/api/auth/2fa/send-secret';
+  static const String verifyUpdateEmailEndpoint = '/api/auth/verify-update-email';
+  static const String changePasswordEndpoint = '/api/user/change-password';
+  static const String updateGmailEndpoint = '/api/user/update-gmail';
   static const String bannerEndpoint = '/api/banner';
   static const String featuredCoursesEndpoint = '/api/courses/featured';
   static const String latestCoursesEndpoint = '/api/courses';
@@ -141,11 +141,11 @@ class AppConstants {
 
   // Course Endpoints
   static const String coursesEndpoint = '/api/courses';
-  static const String userCoursesEndpoint = '/user/courses';
+  static const String userCoursesEndpoint = '/api/user/courses';
   static const String myCoursesEndpoint = '/api/courses/join';
-  static const String lessonDetailEndpoint = '/lessons/detail';
-  static const String checkEnrollmentEndpoint = '/enrollments/check';
-  static const String enrollCourseEndpoint = '/enrollments/enroll';
+  static const String lessonDetailEndpoint = '/api/lessons/detail';
+  static const String checkEnrollmentEndpoint = '/api/enrollments/check';
+  static const String enrollCourseEndpoint = '/api/enrollments/enroll';
   static const String courseCategoriesEndpoint = '/api/course-categories';
   static const String feedbacksEndpoint = '/api/feedbacks';
   static const String feedbacksByCourseEndpoint = '/api/feedbacks/course';
@@ -160,16 +160,16 @@ class AppConstants {
       '/api/videos/proxy'; // /{videoId}/master.m3u8
 
   // Image Endpoints
-  static const String uploadImageEndpoint = '/images/upload';
+  static const String uploadImageEndpoint = '/api/images/upload';
 
   // Order Endpoints
   static const String orderEndpoint = '/api/order';
   static const String orderCancelEndpoint = '/api/order/cancel';
 
   // Profile Endpoints
-  static const String viewProfileEndpoint = '/profile/view';
-  static const String createProfileEndpoint = '/profile/create';
-  static const String updateProfileEndpoint = '/profile/update';
+  static const String viewProfileEndpoint = '/api/profile/view';
+  static const String createProfileEndpoint = '/api/profile/create';
+  static const String updateProfileEndpoint = '/api/profile/update';
 
   // Default Headers
   static const Map<String, String> defaultHeaders = {

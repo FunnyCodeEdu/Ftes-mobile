@@ -335,4 +335,24 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(CacheFailure('${AuthConstants.errorCache}: $e'));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> activateUser(String accessToken) async {
+    if (await networkInfo.isConnected) {
+      try {
+        await remoteDataSource.activateUser(accessToken);
+        return const Right(null);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      } on AuthException catch (e) {
+        return Left(ServerFailure(e.message));
+      } on ValidationException catch (e) {
+        return Left(ValidationFailure(e.message));
+      } on NetworkException catch (e) {
+        return Left(NetworkFailure(e.message));
+      }
+    } else {
+      return const Left(NetworkFailure(AuthConstants.errorNoInternet));
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ftes/core/constants/app_constants.dart';
+import 'package:ftes/core/services/app_update_service.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
@@ -56,8 +57,15 @@ class _LoadingScreenState extends State<LoadingScreen>
     await _logoController.forward();
     await _textController.forward();
 
-    // Wait for 1.2 seconds then decide next route based on first-launch and auth token
-    await Future.delayed(const Duration(milliseconds: 1200));
+    // Chờ animation hoàn thành
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    // Kiểm tra và thực hiện update ngay lập tức nếu có version mới
+    final updateService = AppUpdateService();
+    await updateService.checkAndUpdate();
+
+    // Tiếp tục kiểm tra first-launch và auth token
+    await Future.delayed(const Duration(milliseconds: 700));
 
     final prefs = await SharedPreferences.getInstance();
     final isFirstLaunch = prefs.getBool(AppConstants.keyFirstLaunch) ?? true;

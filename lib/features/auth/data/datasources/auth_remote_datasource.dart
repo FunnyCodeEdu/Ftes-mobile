@@ -24,6 +24,9 @@ abstract class AuthRemoteDataSource {
   /// Verify email OTP
   Future<VerifyOTPResponseModel> verifyEmailOTP(String email, int otp);
 
+  /// Activate user account
+  Future<void> activateUser(String accessToken);
+
   /// Resend verification code
   Future<void> resendVerificationCode(String email);
 
