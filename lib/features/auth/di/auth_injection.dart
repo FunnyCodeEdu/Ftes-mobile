@@ -17,6 +17,7 @@ import '../domain/usecases/resend_verification_code_usecase.dart';
 import '../domain/usecases/send_forgot_password_email_usecase.dart';
 import '../domain/usecases/verify_forgot_password_otp_usecase.dart';
 import '../domain/usecases/reset_password_usecase.dart';
+import '../domain/usecases/activate_user_usecase.dart';
 import '../presentation/viewmodels/auth_viewmodel.dart';
 import '../presentation/viewmodels/register_viewmodel.dart';
 import '../presentation/viewmodels/forgot_password_viewmodel.dart';
@@ -54,6 +55,7 @@ Future<void> initAuthDependencies() async {
   sl.registerLazySingleton(() => SendForgotPasswordEmailUseCase(sl()));
   sl.registerLazySingleton(() => VerifyForgotPasswordOTPUseCase(sl()));
   sl.registerLazySingleton(() => ResetPasswordUseCase(sl()));
+  sl.registerLazySingleton(() => ActivateUserUseCase(sl()));
 
   // ViewModels
   sl.registerFactory(() => AuthViewModel(
@@ -67,6 +69,7 @@ Future<void> initAuthDependencies() async {
     registerUseCase: sl(),
     verifyEmailOTPUseCase: sl(),
     resendVerificationCodeUseCase: sl(),
+    activateUserUseCase: sl(),
     createProfileAutoUseCase: sl(),
   ));
   sl.registerFactory(() => ForgotPasswordViewModel(

@@ -369,7 +369,7 @@ class _CreatePinScreenState extends State<CreatePinScreen> {
         final otp = int.tryParse(pin) ?? -1;
         final success = otp >= 0 ? await vm.verifyOTP(contactInfo, otp) : false;
         
-        if (success) {
+        if (success != null) {
           if (mounted) {
             Navigator.pushReplacementNamed(context, AppConstants.routeCongratulations);
           }

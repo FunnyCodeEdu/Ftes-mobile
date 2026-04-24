@@ -90,6 +90,7 @@ dependencies:
   stomp_dart_client: ^2.0.0
   carousel_slider: ^5.1.2
   flutter_tilt: ^3.3.2
+  in_app_update: ^4.2.5
 
 dev_dependencies:
   flutter_test:

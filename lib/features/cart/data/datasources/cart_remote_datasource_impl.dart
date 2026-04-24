@@ -34,8 +34,10 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
         final data = response.data;
         if (data != null && data['success'] == true) {
           final messageCode = data['messageDTO']?['code'];
-          if (messageCode == 'M001' || messageCode == 'M004') {
-            return true; // Success or already in cart
+          if (messageCode == 'M001') {
+            return true; // Success
+          } else if (messageCode == 'M004') {
+            throw ServerException('Đã tồn tại trong giỏ hàng');
           }
         }
         throw ServerException('Failed to add to cart');

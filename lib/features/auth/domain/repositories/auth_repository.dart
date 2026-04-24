@@ -34,6 +34,9 @@ abstract class AuthRepository {
   /// Reset password with access token
   Future<Either<Failure, void>> resetPassword(String password, String accessToken);
 
+  /// Activate user account
+  Future<Either<Failure, void>> activateUser(String accessToken);
+
   /// Invalidate user cache
   Future<Either<Failure, void>> invalidateUserCache();
 }

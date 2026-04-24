@@ -6,18 +6,21 @@ import '../../domain/entities/user.dart';
 import '../../domain/usecases/register_usecase.dart';
 import '../../domain/usecases/verify_email_otp_usecase.dart';
 import '../../domain/usecases/resend_verification_code_usecase.dart';
+import '../../domain/usecases/activate_user_usecase.dart';
 import '../../../profile/domain/usecases/profile_usecases.dart';
 
 class RegisterViewModel extends ChangeNotifier {
   final RegisterUseCase registerUseCase;
   final VerifyEmailOTPUseCase verifyEmailOTPUseCase;
   final ResendVerificationCodeUseCase resendVerificationCodeUseCase;
+  final ActivateUserUseCase activateUserUseCase;
   final CreateProfileAutoUseCase createProfileAutoUseCase;
 
   RegisterViewModel({
     required this.registerUseCase,
     required this.verifyEmailOTPUseCase,
     required this.resendVerificationCodeUseCase,
+    required this.activateUserUseCase,
     required this.createProfileAutoUseCase,
   });
 
@@ -27,6 +30,7 @@ class RegisterViewModel extends ChangeNotifier {
   String? _errorMessage;
   bool _isRegistered = false;
   String? _registeredEmail;
+  String? _accessToken;
 
   // Getters
   User? get registeredUser => _registeredUser;
@@ -34,6 +38,7 @@ class RegisterViewModel extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   bool get isRegistered => _isRegistered;
   String? get registeredEmail => _registeredEmail;
+  String? get accessToken => _accessToken;
 
   /// Register new user
   Future<bool> register(String username, String email, String password) async {
@@ -72,8 +77,8 @@ class RegisterViewModel extends ChangeNotifier {
     }
   }
 
-  /// Verify email OTP
-  Future<bool> verifyOTP(String email, int otp) async {
+  /// Verify email OTP - returns accessToken on success
+  Future<String?> verifyOTP(String email, int otp) async {
     _setLoading(true);
     _clearError();
 
@@ -86,16 +91,44 @@ class RegisterViewModel extends ChangeNotifier {
       return result.fold(
         (failure) {
           _setError(_mapFailureToMessage(failure));
-          return false;
+          return null;
         },
         (accessToken) {
-          // Token is already cached in repository
+          _accessToken = accessToken;
+          notifyListeners();
+          return accessToken;
+        },
+      );
+    } catch (e) {
+      _setError(AuthConstants.errorVerifyOTPFailed);
+      return null;
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  /// Activate user account after OTP verification
+  Future<bool> activateUser(String accessToken) async {
+    _setLoading(true);
+    _clearError();
+
+    try {
+      final result = await activateUserUseCase(ActivateUserParams(
+        accessToken: accessToken,
+      ));
+
+      return result.fold(
+        (failure) {
+          _setError(_mapFailureToMessage(failure));
+          return false;
+        },
+        (_) {
           notifyListeners();
           return true;
         },
       );
     } catch (e) {
-      _setError(AuthConstants.errorVerifyOTPFailed);
+      _setError('Kích hoạt tài khoản thất bại');
       return false;
     } finally {
       _setLoading(false);
@@ -130,7 +163,7 @@ class RegisterViewModel extends ChangeNotifier {
 
   /// Clear error message
   void clearError() {
-    _clearError();
+    _errorMessage = null;
   }
 
   /// Reset state
@@ -138,7 +171,8 @@ class RegisterViewModel extends ChangeNotifier {
     _registeredUser = null;
     _isRegistered = false;
     _registeredEmail = null;
-    _clearError();
+    _accessToken = null;
+    _errorMessage = null;
     notifyListeners();
   }
 
