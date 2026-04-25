@@ -28,9 +28,10 @@ class AuthRepositoryImpl implements AuthRepository {
       try {
         final authResponse = await remoteDataSource.login(email, password);
         
-        // Cache access token and user ID (critical, await them)
+        // Cache access token, refresh token, and user ID (critical, await them)
         await Future.wait([
           localDataSource.cacheAccessToken(authResponse.accessToken),
+          localDataSource.cacheRefreshToken(authResponse.refreshToken),
           if (authResponse.userId != null && authResponse.userId!.isNotEmpty)
             localDataSource.cacheUserId(authResponse.userId!),
         ]);
@@ -84,9 +85,10 @@ class AuthRepositoryImpl implements AuthRepository {
         // Step 2: Exchange code with backend
         final authResponse = await remoteDataSource.loginWithGoogle(authCode, isAdmin: false);
         
-        // Step 3: Parallel execution - Cache access token and fetch user info simultaneously
+        // Step 3: Cache tokens and fetch user info simultaneously
         final results = await Future.wait([
-          localDataSource.cacheAccessToken(authResponse.accessToken), // Critical operation
+          localDataSource.cacheAccessToken(authResponse.accessToken), // Critical
+          localDataSource.cacheRefreshToken(authResponse.refreshToken), // Critical
           remoteDataSource.getMyInfo(), // Can run in parallel
         ]);
         
@@ -223,7 +225,7 @@ class AuthRepositoryImpl implements AuthRepository {
     if (await networkInfo.isConnected) {
       try {
         final response = await remoteDataSource.verifyEmailOTP(email, otp);
-        if (response.success && response.result != null) {
+          if (response.success && response.result != null) {
           // Cache the access token
           await localDataSource.cacheAccessToken(response.result!.accessToken);
           return Right(response.result!.accessToken);

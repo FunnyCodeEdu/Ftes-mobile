@@ -41,20 +41,31 @@ class AiJsonParserHelper {
     Map<String, dynamic> json,
   ) async {
     try {
-      // Check if we need to use isolate
       final jsonString = jsonEncode(json);
       final jsonSize = jsonString.length;
-      
+
       debugPrint('📊 JSON size: $jsonSize bytes');
-      
+
       if (jsonSize > AiConstants.jsonParsingThreshold) {
         debugPrint('⚡ Using compute isolate for JSON parsing (${jsonSize}B > ${AiConstants.jsonParsingThreshold}B)');
-        
-        // Use top-level function for compute
-        return await compute(
+
+        // Isolate returns Map, convert to AiChatMessage on main thread
+        final result = await compute(
           _parseAiChatResponseInIsolate,
           json,
         );
+
+        if (result != null) {
+          return AiChatMessage(
+            id: DateTime.now().millisecondsSinceEpoch.toString(),
+            content: result['content'] as String,
+            timestamp: DateTime.now(),
+            isFromUser: false,
+            type: AiMessageType.text,
+          );
+        } else {
+          throw Exception('Isolate returned null');
+        }
       } else {
         debugPrint('⚡ Parsing JSON on main thread (${jsonSize}B <= ${AiConstants.jsonParsingThreshold}B)');
         return parseAiChatResponse(json);
@@ -66,17 +77,24 @@ class AiJsonParserHelper {
   }
 }
 
-/// Isolate function for parsing AI response (top-level for compute)
-AiChatMessage _parseAiChatResponseInIsolate(Map<String, dynamic> json) {
+/// Isolate function for parsing AI response (returns simple Map for serialization)
+Map<String, dynamic>? _parseAiChatResponseInIsolate(Map<String, dynamic> json) {
   try {
     final response = AiChatResponseModel.fromJson(json);
-    
+
     if (response.success) {
       final answer = response.getAnswer();
-      
+
       if (answer != null && answer.isNotEmpty) {
-        return AiChatMessage.ai(answer);
+        // ignore: avoid_print
+        print('Isolate: answer found, length=${answer.length}');
+        return {
+          'content': answer,
+          'isFromUser': false,
+        };
       } else {
+        // ignore: avoid_print
+        print('Isolate: answer is null or empty');
         throw Exception(AiConstants.errorEmptyResponse);
       }
     } else {
@@ -85,10 +103,11 @@ AiChatMessage _parseAiChatResponseInIsolate(Map<String, dynamic> json) {
           : (response.message.isNotEmpty
               ? response.message
               : AiConstants.errorSendMessageFailed);
+      // ignore: avoid_print
+      print('Isolate: success=false, error=$errorMsg');
       throw Exception(errorMsg);
     }
   } catch (e) {
-    // Note: Cannot use debugPrint in isolate, using print is acceptable here
     // ignore: avoid_print
     print('Parse AI response in isolate error: $e');
     rethrow;

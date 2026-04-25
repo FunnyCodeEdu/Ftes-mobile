@@ -150,70 +150,71 @@ class _LoginPageState extends State<LoginPage> {
                           _buildRememberMeAndForgotPasswordRow(),
                           const SizedBox(height: 18),
                           _buildSignInButton(),
-                          const SizedBox(height: 18),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  height: 1,
-                                  color: Colors.black12,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: AppConstants.spacingS,
-                                ),
-                                child: Text(
-                                  'Hoặc',
-                                  style: AppTextStyles.body1.copyWith(
-                                    color: AppColors.textSecondary,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  height: 1,
-                                  color: Colors.black12,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 14),
-                          SizedBox(
-                            height: 56,
-                            child: OutlinedButton(
-                              onPressed: _signInWithGoogle,
-                              style: OutlinedButton.styleFrom(
-                                foregroundColor: AppColors.textPrimary,
-                                side: const BorderSide(color: Colors.black12),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                backgroundColor: Colors.white,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/google-icon.png',
-                                    width: 22,
-                                    height: 22,
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    'Đăng nhập với Google',
-                                    style: AppTextStyles.button.copyWith(
-                                      color: AppColors.textPrimary,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                          const SizedBox(height: 20),
+                          // TODO: Re-enable Google Sign-In when backend is ready
+                          // Row(
+                          //   children: [
+                          //     Expanded(
+                          //       child: Container(
+                          //         height: 1,
+                          //         color: Colors.black12,
+                          //       ),
+                          //     ),
+                          //     Padding(
+                          //       padding: EdgeInsets.symmetric(
+                          //         horizontal: AppConstants.spacingS,
+                          //       ),
+                          //       child: Text(
+                          //         'Hoặc',
+                          //         style: AppTextStyles.body1.copyWith(
+                          //           color: AppColors.textSecondary,
+                          //           fontSize: 13,
+                          //           fontWeight: FontWeight.w800,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     Expanded(
+                          //       child: Container(
+                          //         height: 1,
+                          //         color: Colors.black12,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
+                          // const SizedBox(height: 14),
+                          // SizedBox(
+                          //   height: 56,
+                          //   child: OutlinedButton(
+                          //     onPressed: _signInWithGoogle,
+                          //     style: OutlinedButton.styleFrom(
+                          //       foregroundColor: AppColors.textPrimary,
+                          //       side: const BorderSide(color: Colors.black12),
+                          //       shape: RoundedRectangleBorder(
+                          //         borderRadius: BorderRadius.circular(16),
+                          //       ),
+                          //       backgroundColor: Colors.white,
+                          //     ),
+                          //     child: Row(
+                          //       mainAxisAlignment: MainAxisAlignment.center,
+                          //       children: [
+                          //         Image.asset(
+                          //           'assets/google-icon.png',
+                          //           width: 22,
+                          //           height: 22,
+                          //         ),
+                          //         const SizedBox(width: 10),
+                          //         Text(
+                          //           'Đăng nhập với Google',
+                          //           style: AppTextStyles.button.copyWith(
+                          //             color: AppColors.textPrimary,
+                          //             fontSize: 16,
+                          //             fontWeight: FontWeight.w500,
+                          //           ),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
                           const SizedBox(height: 20),
                           _buildDontHaveAccountText(),
                         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/utils/colors.dart';
 import '../../../../core/utils/text_styles.dart';
@@ -36,12 +37,21 @@ class _AiChatPageState extends State<AiChatPage> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     _checkKnowledgeAndInitialize();
     _scrollToBottomAfterBuild();
   }
 
   @override
   void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.portraitUp,
+    ]);
     _messageController.dispose();
     _scrollController.dispose();
     super.dispose();
@@ -466,7 +476,7 @@ class _AiChatPageState extends State<AiChatPage> {
     return Consumer<AiChatViewModel>(
       builder: (context, viewModel, child) {
         return Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [
@@ -483,7 +493,7 @@ class _AiChatPageState extends State<AiChatPage> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
-                    vertical: 12,
+                    vertical: 2,
                   ),
                   decoration: BoxDecoration(
                     color: AppColors.backgroundLight,

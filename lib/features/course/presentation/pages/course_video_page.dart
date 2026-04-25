@@ -1047,6 +1047,23 @@ class _CourseVideoPageState extends State<CourseVideoPage>
                     textAlign: TextAlign.right,
                   ),
                 ),
+                const SizedBox(width: 8),
+                // Chat with AI button
+                _buildControlButtonModern(
+                  icon: Icons.chat_bubble_outline,
+                  onPressed: () {
+                    AppRoutes.navigateToAiChat(
+                      context,
+                      lessonId: widget.lessonId,
+                      lessonTitle: widget.lessonTitle,
+                      videoId: widget.videoUrl,
+                      lessonDescription: widget.descriptions,
+                    );
+                  },
+                  size: 44,
+                  iconSize: 22,
+                  bgColor: const Color(0xFF0961F5).withValues(alpha: 0.8),
+                ),
               ],
             ),
             const SizedBox(height: 16),
@@ -1411,6 +1428,7 @@ class _CourseVideoPageState extends State<CourseVideoPage>
     required VoidCallback onPressed,
     double size = 52,
     double iconSize = 26,
+    Color? bgColor,
   }) {
     return GestureDetector(
       onTap: onPressed,
@@ -1418,12 +1436,14 @@ class _CourseVideoPageState extends State<CourseVideoPage>
         width: size,
         height: size,
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.1),
+          color: bgColor ?? Colors.white.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: 0.15),
-            width: 1,
-          ),
+          border: bgColor != null
+              ? null
+              : Border.all(
+                  color: Colors.white.withValues(alpha: 0.15),
+                  width: 1,
+                ),
         ),
         child: Icon(
           icon,

@@ -108,7 +108,7 @@ class AppConstants {
   static const String forgotPasswordEndpoint = '/api/auth/forgot-password';
   static const String activeUserEndpoint = '/api/users/active-user';
   static const String introspectEndpoint = '/api/auth/introspect';
-  static const String myInfoEndpoint = '/api/users/me';
+  static const String myInfoEndpoint = '/api/users/my-info';
   static const String verifyOtpEndpoint = '/api/auth/verify-otp';
   static const String sendSecretKeyEndpoint = '/api/auth/2fa/send-secret';
   static const String verifyUpdateEmailEndpoint = '/api/auth/verify-update-email';
@@ -124,7 +124,6 @@ class AppConstants {
   static const String profileEndpoint = '/api/profiles';
 
   // Auth Endpoints
-  static const String verifyPinEndpoint = '/auth/verify-pin';
   static const String userRegistrationEndpoint = '/api/users/registration';
 
   // Blog Endpoints
@@ -143,7 +142,7 @@ class AppConstants {
   static const String coursesEndpoint = '/api/courses';
   static const String userCoursesEndpoint = '/api/user/courses';
   static const String myCoursesEndpoint = '/api/courses/join';
-  static const String lessonDetailEndpoint = '/api/lessons/detail';
+  static const String lessonDetailEndpoint = '/api/lessons';
   static const String checkEnrollmentEndpoint = '/api/enrollments/check';
   static const String enrollCourseEndpoint = '/api/enrollments/enroll';
   static const String courseCategoriesEndpoint = '/api/course-categories';
@@ -165,11 +164,6 @@ class AppConstants {
   // Order Endpoints
   static const String orderEndpoint = '/api/order';
   static const String orderCancelEndpoint = '/api/order/cancel';
-
-  // Profile Endpoints
-  static const String viewProfileEndpoint = '/api/profile/view';
-  static const String createProfileEndpoint = '/api/profile/create';
-  static const String updateProfileEndpoint = '/api/profile/update';
 
   // Default Headers
   static const Map<String, String> defaultHeaders = {
